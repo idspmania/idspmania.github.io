@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HyungGyu Oh — Portfolio</title>
+<style>
+  :root{
+    --bg:#0d1117;--surface:#161b22;--surface-2:#1c2330;--border:#26303d;
+    --text:#e6edf3;--muted:#8b98a9;--accent:#5e9eff;--accent-2:#7cf7c4;
+    --accent-soft:rgba(94,158,255,.12);--tag:#243244;--radius:16px;--sidebar-w:270px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  /* Sidebar */
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);padding:34px 22px;display:flex;flex-direction:column;overflow-y:auto}
+  .brand h1{font-size:1.35rem;font-weight:700;letter-spacing:-.02em}
+  .brand p{margin-top:8px;font-size:.95rem;font-weight:600;line-height:1.35;color:var(--accent-2);letter-spacing:.01em}
+  .brand .contact{margin-top:14px;font-size:.8rem;color:var(--muted);word-break:break-all}
+  .brand .contact a{color:var(--accent);text-decoration:none}
+  nav{margin-top:30px;display:flex;flex-direction:column;gap:4px}
+  nav .nav-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;padding-left:12px}
+  nav a{display:flex;align-items:center;gap:12px;color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:.9rem;transition:all .18s ease;border-left:2px solid transparent}
+  nav a .num{font-size:.72rem;font-variant-numeric:tabular-nums;color:var(--muted);min-width:20px}
+  nav a:hover{background:var(--surface-2);color:var(--text)}
+  nav a.active{background:var(--accent-soft);color:var(--accent);border-left:2px solid var(--accent)}
+  nav a.active .num{color:var(--accent)}
+  .sidebar .foot{margin-top:auto;padding-top:24px;font-size:.74rem;color:var(--muted)}
+
+  /* Main */
+  main{margin-left:var(--sidebar-w)}
+  .hero{position:relative;padding:96px 60px 76px;border-bottom:1px solid var(--border);overflow:hidden;
+    background:radial-gradient(900px 420px at 22% -10%, rgba(94,158,255,.14), transparent 60%),radial-gradient(700px 380px at 90% 10%, rgba(124,247,196,.08), transparent 55%)}
+  .hero .eyebrow{color:var(--accent);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  .hero h2{font-size:2.7rem;line-height:1.14;letter-spacing:-.03em;margin:14px 0 16px;max-width:none}
+  .hero p{color:var(--muted);font-size:1.05rem;max-width:none}
+
+  section.project{padding:66px 60px;border-bottom:1px solid var(--border);scroll-margin-top:20px}
+  .project-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center;max-width:1200px}
+  .project:nth-child(even) .visual{order:2}
+  .idx{color:var(--accent);font-size:.8rem;font-weight:600;letter-spacing:.1em}
+  .project h3{font-size:1.6rem;letter-spacing:-.02em;margin:8px 0 18px}
+
+  .visual{display:flex;flex-direction:column;gap:14px}
+  .visual img{width:100%;height:auto;display:block;border:1px solid var(--border);background:var(--surface-2);box-shadow:0 12px 40px rgba(0,0,0,.35);cursor:zoom-in;transition:transform .18s ease,border-color .18s ease}
+  .visual img:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .visual.portrait img{max-width:280px;margin:0 auto}
+
+  .meta{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:20px}
+  .meta .item .k{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .meta .item .v{font-size:.9rem;margin-top:3px;font-weight:500}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .tags span{background:var(--tag);color:#b9c6d6;font-size:.75rem;padding:5px 11px;border-radius:20px;border:1px solid var(--border)}
+  .desc > p{margin-bottom:12px;color:#cdd7e2}
+  .desc ul{list-style:none;margin:0;padding:0}
+  .desc li{position:relative;padding-left:20px;margin-bottom:8px;color:var(--muted);font-size:.92rem}
+  .desc li::before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .desc li strong{color:var(--text);font-weight:600}
+
+  footer{padding:40px 60px;color:var(--muted);font-size:.85rem}
+  footer a{color:var(--accent);text-decoration:none}
+
+  /* Lightbox */
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(6,9,13,.92);z-index:100;align-items:center;justify-content:center;padding:30px;cursor:zoom-out}
+  .lightbox.show{display:flex}
+  .lightbox img{max-width:95%;max-height:92vh;box-shadow:0 20px 70px rgba(0,0,0,.6)}
+  .lightbox .close{position:fixed;top:20px;right:26px;color:#fff;font-size:2rem;cursor:pointer;line-height:1}
+
+  /* Mobile */
+  .menu-btn{display:none}
+  @media (max-width:960px){.project-grid{grid-template-columns:1fr;gap:26px}.project .visual{order:2}}
+  @media (max-width:900px){
+    .sidebar{transform:translateX(-100%);transition:transform .25s ease;z-index:50;box-shadow:0 0 40px rgba(0,0,0,.5)}
+    .sidebar.open{transform:translateX(0)}
+    main{margin-left:0}
+    .hero{padding:82px 22px 48px}.hero h2{font-size:2rem}
+    section.project{padding:44px 22px}
+    footer{padding:32px 22px}
+    .menu-btn{display:flex;align-items:center;justify-content:center;position:fixed;top:16px;left:16px;z-index:60;width:44px;height:44px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:1.2rem}
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}
+    .overlay.show{display:block}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <h1>HyungGyu Oh</h1>
+    <p><strong>Inspiring game designer and developer</strong></p>
+    <div class="contact"><a href="mailto:dspmania@gmail.com">dspmania@gmail.com</a></div>
+    <div class="contact"><a href="https://www.linkedin.com/in/dspmania">LinkedIn Profile</a></div>
+  </div>
+  <nav id="nav">
+    <div class="nav-label">Projects</div>
+    <a href="#force-masters"><span class="num">01</span> Force Masters</a>
+    <a href="#image-gen"><span class="num">02</span> Image Generation for Self-Driving AI Training</a>
+    <a href="#wwf"><span class="num">03</span> Words with Friends</a>
+    <a href="#mars"><span class="num">04</span> Explore Mars</a>
+    <a href="#radar"><span class="num">05</span> FMCW Radar Module</a>
+    <a href="#micromouse"><span class="num">06</span> Vision-based Micro Mouse</a>
+  </nav>
+  <div class="foot">Portfolio · 2026</div>
+</aside>
+
+<main>
+  <header class="hero">
+    <div class="eyebrow">Portfolio</div>
+    <h2>Building interactive systems across games, vision &amp; signal processing.</h2>
+    <p>Six projects spanning mixed-reality mobile games, AI training tools, embedded systems, and radar signal processing.</p>
+  </header>
+
+  <!-- 01 -->
+  <section class="project" id="force-masters">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/ForceMasters1.jpg" alt="Force Masters — gameplay scenario" loading="lazy">
+        <img src="images/ForceMasters2.jpg" alt="Force Masters — voxel maps, PVP, customization, ranking" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">01</div>
+        <h3>Force Masters — Mixed Reality Online Action Game</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">Mobile</div></div>
+          <div class="item"><div class="k">Client</div><div class="v">Unity (C#)</div></div>
+          <div class="item"><div class="k">Server</div><div class="v">Unity, Java, MySQL</div></div>
+          <div class="item"><div class="k">Role</div><div class="v">Game Design · Server/Client Development</div></div>
+        </div>
+        <div class="tags"><span>Unity</span><span>C#</span><span>Java</span><span>MySQL</span><span>Redis</span><span>TCP</span><span>Geospatial</span></div>
+        <div class="desc">
+          <p>A mobile online action game merging real and virtual space via Earth data and player location.</p>
+          <ul>
+            <li><strong>Mobile device's native map and Unity are seamlessly integrated</strong> with real-time battles</li>
+            <li>On-demand <strong>voxel map reflecting each player's real landscape</strong></li>
+            <li>PVP, PVE &amp; Solo — up to <strong>4 players per PVP</strong>, different map each battle</li>
+            <li><strong>Custom geospatial DB</strong> from public open geodata</li>
+            <li>Game server built with the uLink network framework</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="project" id="image-gen">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/ImageGenerationSystem.jpg" alt="Self-driving training image generation — weather, time, signs, traffic" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">02</div>
+        <h3>Image Generation System for Self-Driving AI Training</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">Windows</div></div>
+          <div class="item"><div class="k">Client</div><div class="v">Unity (C#)</div></div>
+          <div class="item"><div class="k">Role</div><div class="v">Client Development</div></div>
+        </div>
+        <div class="tags"><span>Unity</span><span>C#</span><span>Synthetic Data</span></div>
+        <div class="desc">
+          <ul>
+            <li>Generates videos &amp; images from the driver's POV while varying <strong>weather, time of day, road signs, and traffic</strong></li>
+            <li>Built with Unity's climate and screen-recording assets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="project" id="wwf">
+    <div class="project-grid">
+      <div class="visual portrait">
+        <img src="images/WordsWithFriendsiOS.jpg" alt="Words with Friends iOS board" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">03</div>
+        <h3>Words with Friends — iOS</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">iOS</div></div>
+          <div class="item"><div class="k">Client</div><div class="v">Xcode (Objective-C)</div></div>
+          <div class="item"><div class="k">Role</div><div class="v">Client Development</div></div>
+        </div>
+        <div class="tags"><span>Objective-C</span><span>iOS</span><span>IAP</span></div>
+        <div class="desc">
+          <ul>
+            <li>Developed features: <strong>IAP product syncing</strong> from servers, <strong>player-to-player messaging</strong>, and a new game-over screen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="project" id="mars">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/ExploreMars.jpg" alt="Explore Mars browser game with Curiosity rover" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">04</div>
+        <h3>Explore Mars</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">Web Browser</div></div>
+          <div class="item"><div class="k">Client</div><div class="v">Unity (C#)</div></div>
+          <div class="item"><div class="k">Role</div><div class="v">Client Development</div></div>
+        </div>
+        <div class="tags"><span>Unity</span><span>WebGL</span><span>Shaders</span></div>
+        <div class="desc">
+          <p>A browser game exploring Mars with the Curiosity rover, built from an actual Mars height map and satellite imagery.</p>
+          <ul>
+            <li>Developed <strong>click-to-move navigation</strong>, an <strong>image cache system</strong>, and a custom <strong>rim-lighting shader</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="project" id="radar">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/FMCWRadar.jpg" alt="FMCW radar prototype and signal-processing architecture" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">05</div>
+        <h3>FMCW Radar Signal Processing Module</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">Windows</div></div>
+          <div class="item"><div class="k">Client</div><div class="v">Visual Studio (MFC)</div></div>
+          <div class="item"><div class="k">Role</div><div class="v">Signal Processing</div></div>
+        </div>
+        <div class="tags"><span>C++</span><span>MFC</span><span>DSP</span><span>DAQ</span><span>Radar</span></div>
+        <div class="desc">
+          <p>Prototype short-range radar for automobiles.</p>
+          <ul>
+            <li>Developed the <strong>A/D converter controller</strong> and <strong>radar signal-processing software</strong></li>
+            <li>Multithreaded architecture with DAQ control and a 50ms view-update timer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="project" id="micromouse">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/VisionBasedMicroMouse.jpg" alt="Vision-based micro mouse hardware and vision pipeline" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">06</div>
+        <h3>Vision-based Micro Mouse</h3>
+        <div class="meta">
+          <div class="item"><div class="k">Platform</div><div class="v">Embedded</div></div>
+          <div class="item"><div class="v">Undergraduate Capstone Project</div>
+        </div>
+        <div class="tags"><span>C</span><span>DSP (TMS320C32)</span><span>EPLD</span><span>Image Processing</span><span>Hough Transform</span></div>
+        <div class="desc">
+          <p>A micro mouse with a webcam: capture images, detect maze walls, and drive to the goal.</p>
+          <ul>
+            <li>Built hardware with <strong>DSP (TMS320C32) &amp; EPLD</strong>, CMOS sensor (OV7620), step-motor control</li>
+            <li><strong>Image-processing</strong> &amp; maze-solving algorithms in C</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 HyungGyu Oh · <a href="mailto:dspmania@gmail.com">dspmania@gmail.com</a></footer>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox"><span class="close">&times;</span><img id="lightbox-img" src="" alt=""></div>
+
+<script>
+  // active section highlight
+  const links=Array.from(document.querySelectorAll('#nav a'));
+  const sections=links.map(l=>document.querySelector(l.getAttribute('href')));
+  const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.getAttribute('id');links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  sections.forEach(s=>observer.observe(s));
+
+  // mobile menu
+  const sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay'),menuBtn=document.getElementById('menuBtn');
+  const toggle=(o)=>{sidebar.classList.toggle('open',o);overlay.classList.toggle('show',o);};
+  menuBtn.addEventListener('click',()=>toggle(!sidebar.classList.contains('open')));
+  overlay.addEventListener('click',()=>toggle(false));
+  links.forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=900)toggle(false);}));
+
+  // lightbox
+  const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightbox-img');
+  document.querySelectorAll('.visual img').forEach(img=>{
+    img.addEventListener('click',()=>{lbImg.src=img.src;lbImg.alt=img.alt;lb.classList.add('show');});
+  });
+  lb.addEventListener('click',()=>lb.classList.remove('show'));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('show');});
+</script>
+</body>
+</html>
