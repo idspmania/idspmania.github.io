@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HyungGyu Oh — Portfolio</title>
+<meta name="description" content="Portfolio of HyungGyu Oh — game design, real-time 3D development, vision and signal processing projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dspmania.com/">
+<meta property="og:title" content="HyungGyu Oh — Portfolio">
+<meta property="og:description" content="Six projects spanning mixed-reality mobile games, AI training tools, embedded systems, and radar signal processing.">
+<meta property="og:image" content="https://dspmania.com/images/ForceMasters1.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='%235e9eff'%3EH%3C/text%3E%3C/svg%3E">
 <style>
   :root{
     --bg:#0d1117;--surface:#161b22;--surface-2:#1c2330;--border:#26303d;
@@ -47,6 +55,8 @@
   .visual img{width:100%;height:auto;display:block;border:1px solid var(--border);background:var(--surface-2);box-shadow:0 12px 40px rgba(0,0,0,.35);cursor:zoom-in;transition:transform .18s ease,border-color .18s ease}
   .visual img:hover{transform:translateY(-3px);border-color:var(--accent)}
   .visual.portrait img{max-width:280px;margin:0 auto}
+  .visual .video{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--border);background:var(--surface-2);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .visual .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
   .meta{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:20px}
   .meta .item .k{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
@@ -69,13 +79,19 @@
   .lightbox .close{position:fixed;top:20px;right:26px;color:#fff;font-size:2rem;cursor:pointer;line-height:1}
 
   /* Mobile */
-  .menu-btn{display:none}
+  .menu-btn,.mobile-profile{display:none}
   @media (max-width:960px){.project-grid{grid-template-columns:1fr;gap:26px}.project .visual{order:2}}
   @media (max-width:900px){
-    .sidebar{transform:translateX(-100%);transition:transform .25s ease;z-index:50;box-shadow:0 0 40px rgba(0,0,0,.5)}
+    .sidebar{transform:translateX(-100%);transition:transform .25s ease;z-index:50;box-shadow:0 0 40px rgba(0,0,0,.5);padding-top:76px}
     .sidebar.open{transform:translateX(0)}
+    .sidebar .brand{display:none}
+    .sidebar nav{margin-top:0}
     main{margin-left:0}
-    .hero{padding:82px 22px 48px}.hero h2{font-size:2rem}
+    .mobile-profile{display:flex;flex-wrap:wrap;column-gap:18px;padding:22px 22px 30px;background:var(--surface);border-bottom:1px solid var(--border)}
+    .mobile-profile h1{width:100%;min-height:44px;display:flex;align-items:center;padding-left:52px;font-size:1.6rem}
+    .mobile-profile p{width:100%;margin-top:16px;font-size:1.05rem}
+    .mobile-profile .contact{font-size:.9rem}
+    .hero{padding:48px 22px}.hero h2{font-size:2rem}
     section.project{padding:44px 22px}
     footer{padding:32px 22px}
     .menu-btn{display:flex;align-items:center;justify-content:center;position:fixed;top:16px;left:16px;z-index:60;width:44px;height:44px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:1.2rem}
@@ -92,7 +108,7 @@
 <aside class="sidebar" id="sidebar">
   <div class="brand">
     <h1>HyungGyu Oh</h1>
-    <p><strong>Inspiring game designer and real-time 3D developer</strong></p>
+    <p>Aspiring game designer and real-time 3D developer</p>
     <div class="contact"><a href="mailto:dspmania@gmail.com">dspmania@gmail.com</a></div>
     <div class="contact"><a href="https://www.linkedin.com/in/dspmania">LinkedIn Profile</a></div>
     <div class="contact"><a href="files/Resume_HyungGyuOh.pdf" target="_blank" rel="noopener">Resume</a></div>
@@ -121,6 +137,7 @@
   <section class="project" id="force-masters">
     <div class="project-grid">
       <div class="visual">
+        <div class="video"><iframe src="https://www.youtube.com/embed/GikJaIc5PYI" title="Force Masters — gameplay video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
         <img src="images/ForceMasters1.jpg" alt="Force Masters — gameplay scenario" loading="lazy">
         <img src="images/ForceMasters2.jpg" alt="Force Masters — voxel maps, PVP, customization, ranking" loading="lazy">
       </div>
@@ -259,7 +276,7 @@
         <h3>Vision-based Micro Mouse</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">Embedded</div></div>
-          <div class="item"><div class="v">Undergraduate Capstone Project</div>
+          <div class="item"><div class="k">Type</div><div class="v">Undergraduate Capstone Project</div></div>
         </div>
         <div class="tags"><span>C</span><span>DSP (TMS320C32)</span><span>EPLD</span><span>Image Processing</span><span>Hough Transform</span></div>
         <div class="desc">
@@ -286,6 +303,11 @@
   const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.getAttribute('id');links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{rootMargin:'-45% 0px -50% 0px',threshold:0});
   sections.forEach(s=>observer.observe(s));
 
+  // mobile profile: copy sidebar brand to the top of main (shown only on narrow screens)
+  const profile=document.querySelector('.sidebar .brand').cloneNode(true);
+  profile.classList.add('mobile-profile');
+  document.querySelector('main').prepend(profile);
+
   // mobile menu
   const sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay'),menuBtn=document.getElementById('menuBtn');
   const toggle=(o)=>{sidebar.classList.toggle('open',o);overlay.classList.toggle('show',o);};
@@ -299,7 +321,7 @@
     img.addEventListener('click',()=>{lbImg.src=img.src;lbImg.alt=img.alt;lb.classList.add('show');});
   });
   lb.addEventListener('click',()=>lb.classList.remove('show'));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('show');});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){lb.classList.remove('show');toggle(false);}});
 </script>
 </body>
 </html>
