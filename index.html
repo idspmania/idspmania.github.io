@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dspmania.com/">
 <meta property="og:title" content="HyungGyu Oh — Portfolio">
-<meta property="og:description" content="Six projects spanning mixed-reality mobile games, AI training tools, embedded systems, and radar signal processing.">
+<meta property="og:description" content="Seven projects spanning mixed-reality mobile games, robotic locomotion, AI training tools, embedded systems, and radar signal processing.">
 <meta property="og:image" content="https://dspmania.com/images/ForceMasters1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='%235e9eff'%3EH%3C/text%3E%3C/svg%3E">
@@ -50,6 +50,7 @@
   .project:nth-child(even) .visual{order:2}
   .idx{color:var(--accent);font-size:.8rem;font-weight:600;letter-spacing:.1em}
   .project h3{font-size:1.6rem;letter-spacing:-.02em;margin:8px 0 18px}
+  .project-status{display:inline-block;margin-bottom:20px;padding:8px 15px;border:1px solid var(--border);border-radius:20px;background:var(--surface-2);color:var(--accent-2);font-size:.95rem;font-weight:600}
 
   .visual{display:flex;flex-direction:column;gap:14px}
   .visual img{width:100%;height:auto;display:block;border:1px solid var(--border);background:var(--surface-2);box-shadow:0 12px 40px rgba(0,0,0,.35);cursor:zoom-in;transition:transform .18s ease,border-color .18s ease}
@@ -63,6 +64,7 @@
   .meta .item .v{font-size:.9rem;margin-top:3px;font-weight:500}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
   .tags span{background:var(--tag);color:#b9c6d6;font-size:.75rem;padding:5px 11px;border-radius:20px;border:1px solid var(--border)}
+  .desc a{color:var(--accent);text-underline-offset:3px}
   .desc > p{margin-bottom:12px;color:#cdd7e2}
   .desc ul{list-style:none;margin:0;padding:0}
   .desc li{position:relative;padding-left:20px;margin-bottom:8px;color:var(--muted);font-size:.92rem}
@@ -117,11 +119,12 @@
   <nav id="nav">
     <div class="nav-label">Projects</div>
     <a href="#force-masters"><span class="num">01</span> Force Masters</a>
-    <a href="#image-gen"><span class="num">02</span> Image Generation for Self-Driving AI Training</a>
-    <a href="#wwf"><span class="num">03</span> Words with Friends</a>
-    <a href="#mars"><span class="num">04</span> Explore Mars</a>
-    <a href="#radar"><span class="num">05</span> FMCW Radar Module</a>
-    <a href="#micromouse"><span class="num">06</span> Vision-based Micro Mouse</a>
+    <a href="#microduck"><span class="num">02</span> Microduck in Unity</a>
+    <a href="#image-gen"><span class="num">03</span> Image Generation for Self-Driving AI Training</a>
+    <a href="#wwf"><span class="num">04</span> Words with Friends</a>
+    <a href="#mars"><span class="num">05</span> Explore Mars</a>
+    <a href="#radar"><span class="num">06</span> FMCW Radar Module</a>
+    <a href="#micromouse"><span class="num">07</span> Vision-based Micro Mouse</a>
   </nav>
   <div class="foot">Portfolio · 2026</div>
 </aside>
@@ -130,7 +133,7 @@
   <header class="hero">
     <div class="eyebrow">Portfolio</div>
     <h2>Building interactive systems across games, vision &amp; signal processing.</h2>
-    <p>Six projects spanning mixed-reality mobile games, AI training tools, embedded systems, and radar signal processing.</p>
+    <p>Seven projects spanning mixed-reality mobile games, robotic locomotion, AI training tools, embedded systems, and radar signal processing.</p>
   </header>
 
   <!-- 01 -->
@@ -166,13 +169,44 @@
   </section>
 
   <!-- 02 -->
+  <section class="project" id="microduck">
+    <div class="project-grid">
+      <div class="visual">
+        <img src="images/MicroduckTraining.png" alt="Microduck locomotion demo — exported model 1500 walking policy and movement controls" loading="lazy">
+      </div>
+      <div>
+        <div class="idx">02</div>
+        <h3>Microduck in Unity</h3>
+        <div class="project-status">Ongoing · Personal Learning Project</div>
+        <div class="meta">
+          <div class="item"><div class="k">Training Environment</div><div class="v">Windows · WSL2 / Ubuntu 24.04 LTS</div></div>
+          <div class="item"><div class="k">GPU</div><div class="v">NVIDIA RTX 3070 Laptop · 8 GB VRAM</div></div>
+          <div class="item"><div class="k">Simulation</div><div class="v">mjlab · MuJoCo · MuJoCo Warp</div></div>
+          <div class="item"><div class="k">Policy</div><div class="v">PPO (RSL-RL) · ONNX Export</div></div>
+        </div>
+        <div class="tags"><span>Unity</span><span>Robotics</span><span>Reinforcement Learning</span><span>PyTorch</span><span>MuJoCo</span><span>ONNX</span></div>
+        <div class="desc">
+          <p>A personal project bringing a trained locomotion policy into Unity via ONNX, with ongoing improvements through study and iteration.</p>
+          <ul>
+            <li>Supports <strong>forward walking, backward walking, lateral movement, and turning in place</strong></li>
+            <li>Trained with <strong>512 parallel environments through iteration 950</strong>, then resumed with <strong>1,024 environments through cumulative iteration 1,500</strong> before ONNX export</li>
+            <li><strong>61 actor observations</strong> drive <strong>14 joint-position actions</strong>, with physics at <strong>200 Hz</strong> and policy updates at <strong>50 Hz</strong></li>
+            <li>Uses the <strong>BAM M6 actuator model</strong> for Dynamixel XL330 servos</li>
+          </ul>
+          <p><a href="https://github.com/idspmania/microduck-unity" target="_blank" rel="noopener">View GitHub Repository &amp; README</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
   <section class="project" id="image-gen">
     <div class="project-grid">
       <div class="visual">
         <img src="images/ImageGenerationSystem.jpg" alt="Self-driving training image generation — weather, time, signs, traffic" loading="lazy">
       </div>
       <div>
-        <div class="idx">02</div>
+        <div class="idx">03</div>
         <h3>Image Generation System for Self-Driving AI Training</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">Windows</div></div>
@@ -190,14 +224,14 @@
     </div>
   </section>
 
-  <!-- 03 -->
+  <!-- 04 -->
   <section class="project" id="wwf">
     <div class="project-grid">
       <div class="visual portrait">
         <img src="images/WordsWithFriendsiOS.jpg" alt="Words with Friends iOS board" loading="lazy">
       </div>
       <div>
-        <div class="idx">03</div>
+        <div class="idx">04</div>
         <h3>Words with Friends — iOS</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">iOS</div></div>
@@ -214,14 +248,14 @@
     </div>
   </section>
 
-  <!-- 04 -->
+  <!-- 05 -->
   <section class="project" id="mars">
     <div class="project-grid">
       <div class="visual">
         <img src="images/ExploreMars.jpg" alt="Explore Mars browser game with Curiosity rover" loading="lazy">
       </div>
       <div>
-        <div class="idx">04</div>
+        <div class="idx">05</div>
         <h3>Explore Mars</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">Web Browser</div></div>
@@ -239,14 +273,14 @@
     </div>
   </section>
 
-  <!-- 05 -->
+  <!-- 06 -->
   <section class="project" id="radar">
     <div class="project-grid">
       <div class="visual">
         <img src="images/FMCWRadar.jpg" alt="FMCW radar prototype and signal-processing architecture" loading="lazy">
       </div>
       <div>
-        <div class="idx">05</div>
+        <div class="idx">06</div>
         <h3>FMCW Radar Signal Processing Module</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">Windows</div></div>
@@ -265,14 +299,14 @@
     </div>
   </section>
 
-  <!-- 06 -->
+  <!-- 07 -->
   <section class="project" id="micromouse">
     <div class="project-grid">
       <div class="visual">
         <img src="images/VisionBasedMicroMouse.jpg" alt="Vision-based micro mouse hardware and vision pipeline" loading="lazy">
       </div>
       <div>
-        <div class="idx">06</div>
+        <div class="idx">07</div>
         <h3>Vision-based Micro Mouse</h3>
         <div class="meta">
           <div class="item"><div class="k">Platform</div><div class="v">Embedded</div></div>
